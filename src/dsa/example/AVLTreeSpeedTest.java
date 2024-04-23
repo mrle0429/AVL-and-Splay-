@@ -6,8 +6,11 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import dsa.iface.IBinaryTree;
+import dsa.iface.IEntry;
 import dsa.iface.ISortedMap;
 import dsa.impl.AVLTreeMap;
+import dsa.impl.TreePrinter;
 
 /**
  * Class to measure how quickly my AVL Tree implementation works.
@@ -76,12 +79,15 @@ public class AVLTreeSpeedTest {
 
       // record the start again
       start = System.currentTimeMillis();
-
+      List<Integer> values1;
       // get 10% of the values in this list and remove from the tree
       values = values.subList( 0, values.size() / 10 );
       for ( int v : values ) {
-         t.remove( v );
+         t.remove(v);
       }
+
+
+
 
       // print the last time
       end = System.currentTimeMillis();

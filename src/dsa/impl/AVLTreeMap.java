@@ -178,8 +178,14 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
         boolean isLeftHeavy = ((AVLPosition) x.left).height > ((AVLPosition) x.right).height;
         y = isLeftHeavy ? (AVLPosition) x.left : (AVLPosition) x.right;
 
-        isLeftHeavy = ((AVLPosition) y.left).height > ((AVLPosition) y.right).height;
-        z = isLeftHeavy ? (AVLPosition) y.left : (AVLPosition) y.right;
+        // if y has children of equal heights, we choose the side
+        //that will result in a single rotation
+        if(((AVLPosition) y.left).height == ((AVLPosition) y.right).height) {
+            z = isLeftHeavy ? (AVLPosition) y.left : (AVLPosition) y.right;
+        } else {
+            isLeftHeavy = ((AVLPosition) y.left).height > ((AVLPosition) y.right).height;
+            z = isLeftHeavy ? (AVLPosition) y.left : (AVLPosition) y.right;
+        }
 
         // Perform rotations based on the type of imbalance
         if (x.left == y && y.left == z) {  // left-left

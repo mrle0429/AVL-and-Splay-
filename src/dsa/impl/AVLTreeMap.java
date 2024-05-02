@@ -66,7 +66,7 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
         }
 
         AVLPosition beginNode;                                // Begin isBalance the check from this node.
-                                                             // It is the parent of the node(actual) to be removed
+        // It is the parent of the node(actual) to be removed
 
         if (isInternal(current.left) && isInternal(current.right)) {  // Node to be removed has two Internal children
             AVLPosition replacement;                                  // Actual node to be removed
@@ -180,7 +180,7 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
 
         // if y has children of equal heights, we choose the side
         //that will result in a single rotation
-        if(((AVLPosition) y.left).height == ((AVLPosition) y.right).height) {
+        if (((AVLPosition) y.left).height == ((AVLPosition) y.right).height) {
             z = isLeftHeavy ? (AVLPosition) y.left : (AVLPosition) y.right;
         } else {
             isLeftHeavy = ((AVLPosition) y.left).height > ((AVLPosition) y.right).height;

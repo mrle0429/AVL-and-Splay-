@@ -23,6 +23,7 @@ public class SplayTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMa
      * Get the value associated with the key k in the map.
      * Splay the accessed node to the root.
      * If the key is not in the map, splay the parent of ending external node.
+     *
      * @param k The key whose associated value is to be retrieved
      * @return The value associated with the key k, or null if the key is not in the map.
      */
@@ -42,6 +43,7 @@ public class SplayTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMa
     /**
      * Associates the specified value with the specified key in this map.
      * Splay the new node containing the key inserted.
+     *
      * @param k The key with which the specified value is to be associated.
      * @param v The value to be associated with the specified key.
      * @return The previous value associated with the key k, or null if the key was not in the map.
@@ -56,6 +58,7 @@ public class SplayTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMa
     /**
      * Remove the key k and its associated value from the map.
      * Splay the parent of the internal node that was actually removed from the tree
+     *
      * @param k The key whose mapping is to be removed from the map.
      * @return The value associated with the key k, or null if the key was not in the map.
      */
@@ -63,13 +66,14 @@ public class SplayTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMa
     public V remove(K k) {
         V value;
         BTPosition findNode = ((BTPosition) find(root(), k));  // Find the node to remove
+
         if (!this.isInternal(findNode)) {    // Node to be removed doesn't exist
             BTPosition splayNode = findNode.parent;
             splayToRoot(splayNode);          // splay the parent of the ending external node
             return null;
         } else {
             if (isInternal(findNode.left) && isInternal(findNode.right)) {
-                                                                        // Node to be removed has two Internal children
+                // Node to be removed has two Internal children
                 BTPosition replacement;
                 // Find the next bigger node after k.
                 for (replacement = findNode.right; isInternal(replacement.left);
@@ -90,6 +94,7 @@ public class SplayTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMa
 
     /**
      * Splay the node to the root.
+     *
      * @param node The node to splay to the root.
      */
     private void splayToRoot(BTPosition node) {
@@ -100,6 +105,7 @@ public class SplayTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMa
 
     /**
      * A helper method to perform a splay operation.
+     *
      * @param node The node to splay.
      */
     private void splay(BTPosition node) {

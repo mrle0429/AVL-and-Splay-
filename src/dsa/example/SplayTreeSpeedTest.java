@@ -1,22 +1,21 @@
 package dsa.example;
 
+import dsa.iface.ISortedMap;
+import dsa.impl.SplayTreeMap;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import dsa.iface.ISortedMap;
-import dsa.impl.SplayTreeMap;
-
 /**
  * Class to measure how quickly my Splay Tree implementation works.
  * This is same like the speed test for AVL Tree.
- *
+ * <p>
  * Strategy: - Insert a number of values (set in the 'range' variable) into an
  * splay Tree, in random order. - Search for 'range' random variables. - Remove
  * 1/10 of the values from the tree.
- *
  */
 public class SplayTreeSpeedTest {
     public static void main(String[] args) {

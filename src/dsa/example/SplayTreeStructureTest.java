@@ -23,9 +23,9 @@ import dsa.impl.TreePrinter;
  * Zig-Zig. 10 be the new root.
  * - remove(4): 4 has one internal child. Splay the parent of 4. Need to Zig. 5 be the new root.
  * - remove(5): 5 has two internal children. Splay the parent of actual node be removed(10). 10 be the new root.
- *
+ * <p>
  * Binary Search Trees are constructed that has the expected final shape for the AVL tree.
- *
+ * <p>
  * Result: Splay trees are the correct shape.
  */
 public class SplayTreeStructureTest {
@@ -37,6 +37,7 @@ public class SplayTreeStructureTest {
         for (int v : splayOrder) {
             m1.put(v, v);
         }
+
         System.out.println("Splay Tree after insertions:");
         IBinaryTree<IEntry<Integer, Integer>> t1 = (IBinaryTree<IEntry<Integer, Integer>>) m1;
         TreePrinter.printTree(t1);

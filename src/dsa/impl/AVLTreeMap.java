@@ -1,5 +1,6 @@
 package dsa.impl;
 
+import dsa.example.OperationType;
 import dsa.iface.IEntry;
 import dsa.iface.ISortedMap;
 
@@ -32,9 +33,11 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
         return value;
     }
 
+
+
     /**
-     * Associates the specified value with the specified key in this map.
-     * Balances the tree after insertion if necessary.
+     * 1. Associates the specified value with the specified key in this map.
+     * 2. Balances the tree after insertion if necessary.
      *
      * @param k The key with which the specified value is to be associated
      * @param v The value to be associated with the specified key
@@ -42,17 +45,19 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
      */
     @Override
     public V put(K k, V v) {
-        V value = super.put(k, v);  // Insert the node. Same like the put method in BinarySearchTreeMap
+        V value = super.put(k, v);    // Insert the node. Same like the put method in BinarySearchTreeMap
 
         // Adjust the height of nodes after insertion and rebalance if necessary
         AVLPosition insertedPosition = (AVLPosition) super.find(root(), k);
-        checkAndBalanceUpwards(insertedPosition);
+        checkAndBalanceUpwards(insertedPosition, OperationType.PUT);
         return value;
     }
 
+
+
     /**
-     * Remove the key k and its associated value from the map.
-     * Balances the tree after deletion if necessary.
+     * 1. Remove the key k and its associated value from the map.
+     * 2. Balances the tree after deletion if necessary.
      *
      * @param k The key whose mapping is to be removed from the map
      * @return The value associated with the key k, or null if the key was not in the map.
@@ -65,27 +70,29 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
             return null;
         }
 
-        AVLPosition beginNode;                                // Begin isBalance the check from this node.
-        // It is the parent of the node(actual) to be removed
+        AVLPosition balanceCheckNode;                           // Begin isBalance the check from this node.
+                                                        // It is the parent of the node(actual) to be removed
 
         if (isInternal(current.left) && isInternal(current.right)) {  // Node to be removed has two Internal children
-            AVLPosition replacement;                                  // Actual node to be removed
-            // Find the next bigger node after k.
+            AVLPosition replacement;
+
+            // Find the next biggest node after k.
             for (replacement = (AVLPosition) current.right; isInternal(replacement.left);
                  replacement = (AVLPosition) replacement.left) {
             }
 
-            beginNode = (AVLPosition) replacement.parent;
+            balanceCheckNode = (AVLPosition) replacement.parent;
         } else {                                                    // Node to be removed has at least one External child
-            beginNode = (AVLPosition) current.parent;
+            balanceCheckNode = (AVLPosition) current.parent;
         }
 
         V value = super.remove(k);                // Remove node with key k
 
-        checkAndBalanceUpwards(beginNode);      // Adjust the height of nodes after deletion and rebalance if necessary
+        checkAndBalanceUpwards(balanceCheckNode, OperationType.REMOVE);      // Adjust the height of nodes after deletion and rebalance if necessary
         return value;
 
     }
+
 
 
     /**
@@ -93,15 +100,22 @@ public class AVLTreeMap<K extends Comparable<K>, V> extends BinarySearchTreeMap<
      *
      * @param position The position from which to start checking and balancing
      */
-    public void checkAndBalanceUpwards(AVLPosition position) {
+    public void checkAndBalanceUpwards(AVLPosition position, OperationType operationType) {
         while (position != null) {
             position.updateHeight();       // Update the height of the current position
-            if (!isBalanced(position)) {   // Update the height of the current position
+            if (!isBalanced(position)) {
                 restructure(position);     // If not balanced, restructure the tree
+
+                if (operationType == OperationType.PUT) {   // If the operation is PUT, we can stop here
+                    return;
+                }
+
             }
             position = (AVLPosition) position.parent;
         }
     }
+
+
 
     /**
      * Performs a left rotation around the given position.

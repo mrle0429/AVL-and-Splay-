@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
+// Test
 /**
  * Class to measure how quickly my AVL Tree implementation works.
  * <p>
